@@ -17,6 +17,8 @@ if __name__ == "__main__":
     filename = sys.argv[1]
     with open(filename) as file:
         for line in file:
+            if len(line) == 1:
+                break
             num = int(line)
             print("{:d}=".format(num), end="")
             factors = find_prime_factors(num)
