@@ -14,6 +14,8 @@ def find_prime_factors(num):
     return factors
 
 if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("factors <file>")
     filename = sys.argv[1]
     with open(filename) as file:
         for line in file:
@@ -25,5 +27,3 @@ if __name__ == "__main__":
             if len(factors) == 1:
                 factor, prime = factors[0]
                 print("{}*{}".format(factor, prime))
-            else:
-                print("Invalid input")
