@@ -1,18 +1,27 @@
 #!/usr/bin/python3
-from sys import argv
+import sys
 
-with open(argv[1]) as file:
-    for line in file:
-        num = int(line)
-        print("{:d}=".format(num), end="")
-        if num % 2 == 0:
-            print("{}*2".format(num//2))
-            continue
-        for i in range(3, num, 2):
-            if num % i == 0:
-                factor = num//i
-                for j in range(3, factor, 2):
-                    if factor % j == 0 or i % j == 0:
-                        break
-                print("{}*{}".format(factor, i))
-                break
+def find_prime_factors(num):
+    factors = []
+    if num % 2 == 0:
+        factors.append((num//2, 2))
+        return factors
+    for i in range(3, num, 2):
+        if num % i == 0:
+            factor = num // i
+            factors.append((factor, i))
+            break
+    return factors
+
+if __name__ == "__main__":
+    filename = sys.argv[1]
+    with open(filename) as file:
+        for line in file:
+            num = int(line)
+            print("{:d}=".format(num), end="")
+            factors = find_prime_factors(num)
+            if len(factors) == 1:
+                factor, prime = factors[0]
+                print("{}*{}".format(factor, prime))
+            else:
+                print("Invalid input")
