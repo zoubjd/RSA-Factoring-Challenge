@@ -1,25 +1,18 @@
 #!/usr/bin/python3
-import sys
+from sys import argv
 
-def factoriser(num):
-    for i in range(2, int(num / 2) + 1):
-        if num % i == 0:
-            return (num//i, i)
-
-
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: factors <file>")
-        exit()
-    factors = sys.argv[1]
-    try:
-        with open(factors, 'r') as f:
-            lines = f.readlines()
-    except FileNotFoundError:
-        print("File not found")
-        exit()
-    
-    for line in lines:
-        num = int(line.strip())
-        result = factoriser(num)
-        print("{}={}*{}".format(num, result[0], result[1]))
+with open(argv[1]) as file:
+    for line in file:
+        num = int(line)
+        print("{:d}=".format(num), end="")
+        if num % 2 == 0:
+            print("{}*2".format(num//2))
+            continue
+        for i in range(3, num, 2):
+            if num % i == 0:
+                factor = num//i
+                for j in range(3, factor, 2):
+                    if factor % j == 0 or i % j == 0:
+                        break
+                print("{}*{}".format(factor, i))
+                break
